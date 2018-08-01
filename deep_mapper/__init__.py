@@ -19,8 +19,12 @@ def process_mapping(data, map_options, root_path):
 
     # TODO: temporal solution to support clear XPath syntax
     # will be re-written wtih as new getter using some external solution
+
     for key in map_options:
         map_options[key]['path'] = normalize_path(map_options[key]['path'])
+        if "sub_mapping" in map_options[key]:
+            map_options[key]["sub_mapping"] = normalize_path_of_sub_map(map_options[key]["sub_mapping"])
+            
     root_path = normalize_path(root_path or '')
 
     root = getter(data, root_path)
@@ -30,6 +34,12 @@ def process_mapping(data, map_options, root_path):
         answer = mapper(root, map_options)
     return answer
 
+def normalize_path_of_sub_map(map_options):
+    for key in map_options:
+        map_options[key]["path"] = normalize_path(map_options[key]["path"])
+
+    return map_options
+
 def mapper(data, fields_map):
     '''
     actually a mapper function that will process each node with prepeared rules from fields_map
@@ -37,11 +47,16 @@ def mapper(data, fields_map):
     result = {}
     for key, map_rule in iter(fields_map.items()):
         postprocess = map_rule.get('postprocess')
+        sub_mapping = map_rule.get('sub_mapping')
         result[key] = getter(data, map_rule['path'])
 
         if postprocess is not None:
             with suppress(Exception):
                 result[key] = postprocess(result[key], *map_rule.get('args', []), **map_rule.get('kwargs', {}))
+
+        if sub_mapping is not None and isinstance(result[key], list):
+            result[key] = list(map(lambda obj: mapper(obj, sub_mapping), result[key]))
+            
     return result
 
 def normalize_path(path_as_str):
