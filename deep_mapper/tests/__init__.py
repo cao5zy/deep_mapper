@@ -1,6 +1,6 @@
 from unittest import TestCase
 import deep_mapper
-
+from assertpy import assert_that
 
 DATA = {
     'root': [
@@ -39,3 +39,15 @@ class TestDMapper(TestCase):
         }
         result = deep_mapper.process_mapping(DATA, MAP_STRUCTURE, '/root')
         self.assertTrue(isinstance(result, list))
+
+DATA1 = {
+    "title": "hello"
+}
+
+def test_object():
+    MAP_STRUCTURE = {
+        "name": {"path": "/title"}
+    }
+
+    result = deep_mapper.process_mapping(DATA1, MAP_STRUCTURE, "/")
+    assert_that(result).contains_entry({'name':'hello'})

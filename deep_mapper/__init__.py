@@ -62,7 +62,7 @@ def getter(data, path):
     '''
     source = data
     for node in path:
-        if isinstance(node, str) and isinstance(source, dict):
+        if isinstance(node, str) and len(node) > 0 and isinstance(source, dict):
             source = source.get(node)
         elif isinstance(node, int) and isinstance(source, list):
             source = source[node] if len(source) > node else None
