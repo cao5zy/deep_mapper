@@ -23,10 +23,19 @@ mapping structure example
         'image': {
             'path': '/gallery/image/@href'
         },
+        'methods': {
+            'path': '/mds',
+            'sub_mapping': {
+                'name': '/title',
+                'num': '/age'
+            }
+        }
     }
 
 
-all pathes need to be based on XPath rules
+all pathes need to be based on XPath rules.   
+`sub_mapping` is used to map the object in the list. Please take a look at [test_arry_mapping](tests/test_arry_mapping.py) for more details.  
+
 available from pip (python3):
 
 ``pip install deep_mapper``
