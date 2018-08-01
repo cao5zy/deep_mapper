@@ -34,7 +34,7 @@ mapping structure example
 
 
 all pathes need to be based on XPath rules.   
-`sub_mapping` is used to map the object in the list. Please take a look at [test_arry_mapping](tests/test_arry_mapping.py) for more details.  
+`sub_mapping` is used to map the object in the list. Please take a look at [test_arry_mapping](deep_mapper/tests/test_arry_mapping.py) for more details.  
 
 available from pip (python3):
 
