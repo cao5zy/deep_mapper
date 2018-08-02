@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='deep_mapper1',
-      version='0.0.1',
+      version='0.0.3',
       description='This is a fork of gebriallairbeg/deep_mapper. It is able to return an object with converted keys, or a list of objects',
       url='http://github.com/cao5zy/deep_mapper',
       author='zongying.cao',
