@@ -72,3 +72,42 @@ Result
 ```
 
 ## Convert from a simple dict that contains an array
+Source Data
+```
+DATA = {
+    "name": "alan",
+    "ID": "2q212121",
+    "team": [{
+        "name": "Dan"
+    }]
+}
+```
+Map structure
+```
+MAP_STRUCTURE = {
+    "title": { "path": "/name"},
+    "id": { "path": "/id" },
+    "members": { 
+        "path": "/team",
+        "sub_mapping": {
+            "title": { "path": "/name" }
+        }
+    }
+}
+```
+Do mapping
+```
+from deep_mapper import process_mapping
+
+result = process_mapping(DATA, MAP_STRUCTURE, "/")
+```
+Result
+```
+{
+    "title": "alan",
+    "id": "2q212121",
+    "members": [{
+        "title": "Dan"
+    }]
+}
+```
